@@ -1,0 +1,90 @@
+name: Build Windows
+
+# Builds Vpn-Ofmes on a real Windows runner (Visual Studio 2022 + Qt 6),
+# since the CLI environment used to write this code has no Windows/MSVC
+# available to produce a .exe locally. Run this manually from the
+# "Actions" tab (workflow_dispatch) any time you want a fresh build, or
+# just push to get one automatically.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch: {}
+
+env:
+  QT_VERSION: "6.7.3"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: "windows"
+          target: "desktop"
+          arch: "win64_msvc2019_64"
+          modules: "qtsvg"
+          cache: true
+
+      - name: Configure (CMake + Visual Studio 2022)
+        shell: pwsh
+        run: |
+          cmake -B build -S . -G "Visual Studio 17 2022" -A x64 `
+                -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR;$env:Qt6_DIR"
+
+      - name: Build (Release)
+        run: cmake --build build --config Release --parallel
+
+      - name: Deploy Qt runtime DLLs next to the executable
+        shell: pwsh
+        run: |
+          windeployqt --release --no-translations --no-compiler-runtime `
+                      build\Release\VpnOfmes.exe
+
+      # This is the artifact most people want: VpnOfmes.exe plus every Qt
+      # DLL/plugin it needs and the app's styles/config assets, ready to
+      # run on any Windows machine without installing Qt.
+      - name: Upload Vpn-Ofmes.exe (ready-to-run folder)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vpn-Ofmes-windows-x64
+          path: build/Release/
+          if-no-files-found: error
+
+      - name: Package a release ZIP (CPack)
+        working-directory: build
+        run: cpack -G ZIP -C Release
+
+      - name: Upload release ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vpn-Ofmes-release-zip
+          path: build/*.zip
+          if-no-files-found: error
+
+  # When a version tag like v1.0.0 is pushed, also publish the ZIP as a
+  # GitHub Release so it's downloadable without opening the Actions tab.
+  release:
+    needs: build-windows
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download release ZIP
+        uses: actions/download-artifact@v4
+        with:
+          name: Vpn-Ofmes-release-zip
+          path: dist
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
