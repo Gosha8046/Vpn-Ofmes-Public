@@ -30,7 +30,9 @@ jobs:
           host: "windows"
           target: "desktop"
           arch: "win64_msvc2019_64"
-          modules: "qtsvg"
+          # QtSvg ships as part of the base desktop install for this Qt
+          # version (not as an addon), so it isn't a valid --modules name;
+          # requesting it here made aqtinstall fail immediately.
           cache: true
 
       - name: Configure (CMake + Visual Studio 2022)
