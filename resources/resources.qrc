@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="icons/logo.svg">../icons/logo.svg</file>
+        <file alias="icons/connect.svg">../icons/connect.svg</file>
+        <file alias="icons/disconnect.svg">../icons/disconnect.svg</file>
+        <file alias="icons/settings.svg">../icons/settings.svg</file>
+        <file alias="icons/logs.svg">../icons/logs.svg</file>
+        <file alias="icons/tray_connected.svg">../icons/tray_connected.svg</file>
+        <file alias="icons/tray_disconnected.svg">../icons/tray_disconnected.svg</file>
+        <file alias="icons/update.svg">../icons/update.svg</file>
+        <file alias="styles/dark_purple.qss">../styles/dark_purple.qss</file>
+    </qresource>
+</RCC>

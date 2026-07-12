@@ -1,0 +1,21 @@
+# Build output
+build/
+out/
+cmake-build-*/
+
+# Qt / IDE
+*.user
+*.autosave
+.vs/
+.vscode/
+
+# Runtime logs generated on first launch (kept only as a placeholder dir)
+logs/*.log
+
+# Packaging
+*.zip
+*.exe
+*.msi
+_CPack_Packages/
+CPackConfig.cmake
+CPackSourceConfig.cmake

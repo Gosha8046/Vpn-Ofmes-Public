@@ -1,0 +1,217 @@
+/*
+ * Vpn-Ofmes - Dark Purple theme
+ * Background: #121212  Accent: #7B2EFF  Text: #FFFFFF
+ *
+ * This stylesheet is the single place that defines the visual language of
+ * the application. Widgets are styled through Qt object names (set in the
+ * C++ code) rather than by widget class, so the same class (QFrame,
+ * QPushButton, ...) can carry different looks depending on its role.
+ */
+
+* {
+    font-family: "Segoe UI", "Inter", sans-serif;
+    color: #FFFFFF;
+}
+
+QMainWindow, QWidget {
+    background-color: #121212;
+}
+
+/* ---------------------------------------------------------------------
+ * Navigation rail
+ * ------------------------------------------------------------------- */
+#navRail {
+    background-color: #181018;
+    border-right: 1px solid #2A1E33;
+}
+
+#brandLabel {
+    font-size: 20px;
+    font-weight: 600;
+    color: #B385FF;
+    letter-spacing: 1px;
+}
+
+#versionLabel {
+    color: #6E6E6E;
+    font-size: 11px;
+}
+
+QPushButton#navButton {
+    text-align: left;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #C9C9C9;
+    font-size: 14px;
+}
+
+QPushButton#navButton:hover {
+    background-color: #241830;
+    color: #FFFFFF;
+}
+
+QPushButton#navButton:checked {
+    background-color: #7B2EFF;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+ * Cards
+ * ------------------------------------------------------------------- */
+QFrame#card {
+    background-color: #1B1620;
+    border: 1px solid #2A1E33;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+#cardTitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: #B385FF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#pageTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+#statusLabel {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+ * Inputs
+ * ------------------------------------------------------------------- */
+QLineEdit, QComboBox, QSpinBox {
+    background-color: #241D2C;
+    border: 1px solid #3A2C48;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #FFFFFF;
+    selection-background-color: #7B2EFF;
+}
+
+QLineEdit:focus, QComboBox:focus, QSpinBox:focus {
+    border: 1px solid #7B2EFF;
+}
+
+QLineEdit:disabled, QComboBox:disabled {
+    color: #6E6E6E;
+    background-color: #1C171F;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 24px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #241D2C;
+    border: 1px solid #3A2C48;
+    selection-background-color: #7B2EFF;
+    outline: none;
+}
+
+QCheckBox {
+    spacing: 8px;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #3A2C48;
+    background-color: #241D2C;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #7B2EFF;
+    border: 1px solid #7B2EFF;
+}
+
+/* ---------------------------------------------------------------------
+ * Buttons
+ * ------------------------------------------------------------------- */
+QPushButton#primaryButton {
+    background-color: #7B2EFF;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+QPushButton#primaryButton:hover {
+    background-color: #9354FF;
+}
+
+QPushButton#primaryButton:pressed {
+    background-color: #6420E0;
+}
+
+QPushButton#primaryButton:disabled {
+    background-color: #3A2C48;
+    color: #7A7A7A;
+}
+
+QPushButton#secondaryButton {
+    background-color: transparent;
+    border: 1px solid #7B2EFF;
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #B385FF;
+}
+
+QPushButton#secondaryButton:hover {
+    background-color: #241830;
+}
+
+QPushButton#secondaryButton:disabled {
+    border: 1px solid #3A2C48;
+    color: #5A5A5A;
+}
+
+/* ---------------------------------------------------------------------
+ * Logs screen
+ * ------------------------------------------------------------------- */
+#logView {
+    background-color: #0E0B10;
+    border: 1px solid #2A1E33;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+/* ---------------------------------------------------------------------
+ * Scrollbars
+ * ------------------------------------------------------------------- */
+QScrollBar:vertical {
+    background: transparent;
+    width: 10px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical {
+    background: #3A2C48;
+    border-radius: 5px;
+    min-height: 24px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #7B2EFF;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+}

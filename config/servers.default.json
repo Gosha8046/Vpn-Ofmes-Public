@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Example WireGuard",
+        "host": "wg.example.com",
+        "port": 51820,
+        "protocol": "wireguard",
+        "configTemplatePath": "config/samples/example-wireguard.conf"
+    },
+    {
+        "name": "Example OpenVPN",
+        "host": "ovpn.example.com",
+        "port": 1194,
+        "protocol": "openvpn",
+        "configTemplatePath": "config/samples/example-openvpn.ovpn"
+    }
+]

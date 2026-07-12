@@ -1,0 +1,11 @@
+{
+    "startMinimizedToTray": false,
+    "minimizeToTrayOnClose": true,
+    "autoReconnect": true,
+    "reconnectIntervalSeconds": 5,
+    "maxReconnectAttempts": 10,
+    "checkForUpdatesOnStartup": true,
+    "updateManifestUrl": "https://raw.githubusercontent.com/gosha8046/vpn-ofmes-public/main/config/version.json",
+    "lastSelectedServer": "",
+    "rememberCredentials": false
+}
