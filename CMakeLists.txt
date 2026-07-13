@@ -117,6 +117,16 @@ target_link_libraries(VpnOfmes PRIVATE
 )
 
 if(WIN32)
+    # Windows SDK headers gate the Vista-era IP Helper API (GetIfTable2,
+    # MIB_IF_TABLE2, used by NetworkMonitor) behind _WIN32_WINNT/
+    # NTDDI_VERSION. The MSVC project CMake generates doesn't define
+    # these high enough by default, which fails with "undeclared
+    # identifier" errors; pin them to Windows 10 explicitly.
+    target_compile_definitions(VpnOfmes PRIVATE
+        _WIN32_WINNT=0x0A00
+        NTDDI_VERSION=0x0A000000
+    )
+
     # IP Helper API (NetworkMonitor's interface byte counters) and
     # Crypt32 (CredentialStore's DPAPI-based secret storage).
     target_link_libraries(VpnOfmes PRIVATE iphlpapi crypt32 ws2_32)
