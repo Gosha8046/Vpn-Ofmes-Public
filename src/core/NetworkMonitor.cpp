@@ -3,6 +3,10 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <iphlpapi.h>
+// GetIfTable2()/MIB_IF_TABLE2 (the "v2" IP Helper API) live in netioapi.h;
+// iphlpapi.h does not reliably pull it in on its own, which previously
+// produced "undeclared identifier" errors for both symbols.
+#include <netioapi.h>
 #elif defined(Q_OS_LINUX)
 #include <QFile>
 #include <QTextStream>
