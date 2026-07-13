@@ -1,11 +1,17 @@
 #include "vpnofmes/core/NetworkMonitor.h"
 
 #ifdef Q_OS_WIN
+// <windows.h> alone drags in the legacy Winsock 1.1 header, and the "v2"
+// IP Helper API (GetIfTable2/MIB_IF_TABLE2/FreeMibTable, declared in
+// netioapi.h) depends on Winsock2 types that are only declared once
+// winsock2.h has been included. WIN32_LEAN_AND_MEAN plus including
+// winsock2.h before windows.h is the standard fix for this well-known
+// conflict; without it these symbols silently fail to declare.
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+#include <ws2tcpip.h>
 #include <windows.h>
 #include <iphlpapi.h>
-// GetIfTable2()/MIB_IF_TABLE2 (the "v2" IP Helper API) live in netioapi.h;
-// iphlpapi.h does not reliably pull it in on its own, which previously
-// produced "undeclared identifier" errors for both symbols.
 #include <netioapi.h>
 #elif defined(Q_OS_LINUX)
 #include <QFile>
