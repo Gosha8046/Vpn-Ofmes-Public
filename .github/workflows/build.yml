@@ -9,6 +9,7 @@ name: Build Windows
 on:
   push:
     branches: ["**"]
+    tags: ["v*"]
   pull_request:
   workflow_dispatch: {}
 
@@ -76,8 +77,9 @@ jobs:
           path: build/*.zip
           if-no-files-found: error
 
-  # When a version tag like v1.0.0 is pushed, also publish the ZIP as a
-  # GitHub Release so it's downloadable without opening the Actions tab.
+  # When a version tag like v1.0.0 is pushed, also publish both build
+  # artifacts as a GitHub Release so they're downloadable without opening
+  # the Actions tab.
   release:
     needs: build-windows
     if: startsWith(github.ref, 'refs/tags/v')
@@ -85,13 +87,25 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download release ZIP
+      - name: Download CPack release ZIP
         uses: actions/download-artifact@v4
         with:
           name: Vpn-Ofmes-release-zip
           path: dist
 
+      - name: Download ready-to-run folder
+        uses: actions/download-artifact@v4
+        with:
+          name: Vpn-Ofmes-windows-x64
+          path: dist-unpacked/Vpn-Ofmes-windows-x64
+
+      - name: Zip the ready-to-run folder
+        working-directory: dist-unpacked
+        run: zip -r ../dist/Vpn-Ofmes-windows-x64.zip Vpn-Ofmes-windows-x64
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          name: Vpn-Ofmes ${{ github.ref_name }}
+          generate_release_notes: true
           files: dist/*.zip
