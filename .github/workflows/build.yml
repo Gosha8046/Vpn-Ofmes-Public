@@ -35,10 +35,15 @@ jobs:
           # requesting it here made aqtinstall fail immediately.
           cache: true
 
-      - name: Configure (CMake + Visual Studio 2022)
+      - name: Configure (CMake + whichever Visual Studio the runner ships)
         shell: pwsh
         run: |
-          cmake -B build -S . -G "Visual Studio 17 2022" -A x64 `
+          # Don't hardcode a Visual Studio generator name/version: the
+          # windows-latest runner image's bundled VS version changes over
+          # time (e.g. it moved from VS2022 to VS2026), so let CMake
+          # auto-detect whatever is actually installed and just pin the
+          # architecture.
+          cmake -B build -S . -A x64 `
                 -DCMAKE_PREFIX_PATH="$env:QT_ROOT_DIR;$env:Qt6_DIR"
 
       - name: Build (Release)
